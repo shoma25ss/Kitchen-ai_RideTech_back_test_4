@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+  app:
+    build: ./docker/php
+    volumes:
+      - ./src:/var/www/html
+    depends_on:
+      - db
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+
+  web:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www/html
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: kitchenai
+      MYSQL_USER: kitchenai
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: secret
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
