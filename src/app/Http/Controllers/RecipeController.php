@@ -15,11 +15,13 @@ class RecipeController extends Controller
     {
         $recipes = Recipe::with(['user', 'likes', 'comments'])
             ->where('is_public', true)
+            ->where('is_reviewed', true)
             ->latest()
-            ->paginate(12);
+            ->paginate(auth()->check() ? 12 : 6);
 
         return view('top', compact('recipes'));
     }
+
 
     // レシピ生成
     public function generate(Request $request)
@@ -105,7 +107,6 @@ class RecipeController extends Controller
         ]);
     }
 
-    return redirect()->route('recipes.cook', $recipe)
-        ->with('success', 'レシピを保存しました！調理を始めましょう！');
+    return redirect()->route('recipes.cook', $recipe);
 }
 }

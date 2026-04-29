@@ -13,7 +13,7 @@
         </div>
 
         <h1 class="text-2xl font-bold text-gray-800 mb-2">{{ $recipe->title }}</h1>
-        <p class="text-gray-400 text-sm mb-3">by {{ $recipe->user->name }}</p>
+        <p class="text-gray-400 text-sm mb-3">by {{ $recipe->user->display_name }}</p>
 
         @if($recipe->description)
             <p class="text-gray-600 text-sm mb-4">{{ $recipe->description }}</p>
@@ -99,7 +99,7 @@
         @forelse($recipe->comments as $comment)
             <div class="flex gap-3 mb-4 pb-4 border-b border-gray-100 last:border-0">
                 <div class="w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
-                    {{ mb_substr($comment->user->name, 0, 1) }}
+                    {{ mb_substr($comment->user->display_name, 0, 1) }}
                 </div>
                 <div class="flex-1">
                     <div class="flex items-center justify-between mb-1">

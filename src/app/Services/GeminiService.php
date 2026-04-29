@@ -82,7 +82,23 @@ PROMPT;
 
       $decoded = json_decode($jsonText, true);
       if (is_array($decoded) && !empty($decoded)) {
-      return $decoded;
+        // difficultyの値を正規化
+        foreach ($decoded as &$recipe) {
+           if (isset($recipe['difficulty'])) {
+               $map = [
+                   'normal'  => 'medium',
+                   'easy'    => 'easy',
+                   'medium'  => 'medium',
+                   'hard'    => 'hard',
+                   '簡単'    => 'easy',
+                   '普通'    => 'medium',
+                   '難しい'  => 'hard',
+                ];
+               $recipe['difficulty'] = $map[$recipe['difficulty']] ?? 'medium';
+            }
+        }
+        unset($recipe);
+        return $decoded;
       }
   }
 

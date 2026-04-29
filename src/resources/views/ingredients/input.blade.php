@@ -17,15 +17,15 @@
                 <!-- タグはJSで追加 -->
             </div>
 
-            <div class="flex gap-2">
-                <input type="text" id="ingredient-input"
-                    placeholder="例：たまご、豚肉、玉ねぎ"
-                    class="flex-1 border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-green-500">
-                <button type="button" onclick="addIngredient()"
-                    class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-500">
-                    追加
-                </button>
-            </div>
+            <div class="flex flex-col sm:flex-row gap-2">
+            <input type="text" id="ingredient-input"
+                placeholder="例：たまご、豚肉、玉ねぎ"
+                class="w-full min-w-0 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-green-500">
+            <button type="button" onclick="addIngredient()"
+            class="sm:flex-shrink-0 w-full sm:w-auto bg-green-600 text-white px-3 py-2 rounded-lg text-sm hover:bg-green-500 font-bold">
+            ＋ 追加
+            </button>
+        </div>
 
             <!-- hidden input -->
             <div id="hidden-inputs"></div>
@@ -51,11 +51,11 @@
         <div class="bg-white rounded-xl shadow p-6 mb-6">
             <h2 class="font-bold text-gray-700 mb-3">絞り込み（任意）</h2>
 
-            <div class="grid grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <!-- ジャンル -->
                 <div>
                     <label class="text-xs text-gray-500 mb-1 block">ジャンル</label>
-                    <select name="genre" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                    <select name="genre" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm appearance-none">
                         <option value="">指定なし</option>
                         <option value="和食">和食</option>
                         <option value="洋食">洋食</option>
@@ -68,7 +68,7 @@
                 <!-- 調理時間 -->
                 <div>
                     <label class="text-xs text-gray-500 mb-1 block">調理時間</label>
-                    <select name="cooking_time" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                    <select name="cooking_time" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm appearance-none">
                         <option value="">指定なし</option>
                         <option value="15">15分以内</option>
                         <option value="30">30分以内</option>
@@ -79,7 +79,7 @@
                 <!-- カロリー -->
                 <div>
                     <label class="text-xs text-gray-500 mb-1 block">カロリー</label>
-                    <select name="calories" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                    <select name="calories" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm appearance-none">
                         <option value="">指定なし</option>
                         <option value="300">300kcal以内</option>
                         <option value="500">500kcal以内</option>
@@ -90,7 +90,7 @@
                 <!-- 難易度 -->
                 <div>
                     <label class="text-xs text-gray-500 mb-1 block">難易度</label>
-                    <select name="difficulty" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                    <select name="difficulty" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm appearance-none">
                         <option value="">指定なし</option>
                         <option value="easy">かんたん</option>
                         <option value="medium">普通</option>
@@ -102,8 +102,8 @@
 
         <!-- 生成ボタン -->
         <button type="submit"
-            class="w-full bg-yellow-400 text-gray-800 py-3 rounded-xl font-bold text-lg hover:bg-yellow-300">
-            ✨ AIでレシピ生成
+            class="w-full bg-yellow-400 text-gray-800 py-3 rounded-xl font-bold text-lg hover:bg-yellow-300 appearance-none">
+            AIでレシピ生成
         </button>
 
     </form>

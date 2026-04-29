@@ -38,14 +38,14 @@
                         <div id="timer-display-{{ $index }}" class="text-4xl font-bold text-green-600 font-mono mb-2">
                             {{ gmdate('i:s', $step->timer_seconds) }}
                         </div>
-                        <div class="flex justify-center gap-3">
+                        <div class="flex flex-col gap-2">
                             <button onclick="startTimer({{ $index }}, {{ $step->timer_seconds }})"
-                                class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-500">
-                                ▶ スタート
+                                class="w-full bg-green-600 text-white py-3 rounded-lg text-sm font-bold hover:bg-green-500">
+                                スタート
                             </button>
                             <button onclick="resetTimer({{ $index }}, {{ $step->timer_seconds }})"
-                                class="bg-gray-400 text-white px-4 py-2 rounded-lg text-sm hover:bg-gray-300">
-                                リセット
+                               class="w-full bg-gray-400 text-white py-3 rounded-lg text-sm font-bold hover:bg-gray-300">
+                               リセット
                             </button>
                         </div>
                     </div>
@@ -75,12 +75,12 @@
     <div class="bg-white rounded-xl shadow p-6 mt-8">
         <h2 class="font-bold text-gray-700 mb-3">💬 AIに質問する</h2>
         <div id="chat-messages" class="space-y-3 mb-4 max-h-60 overflow-y-auto"></div>
-        <div class="flex gap-2">
+        <div class="flex flex-col gap-2">
             <input type="text" id="chat-input"
                 placeholder="例：焦げてきたらどうすれば？"
-                class="flex-1 border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-green-500">
+                class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-green-500">
             <button onclick="sendChat()"
-                class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-500">
+                class="w-full bg-green-600 text-white py-3 rounded-lg text-sm font-bold hover:bg-green-500">
                 送信
             </button>
         </div>
@@ -113,6 +113,7 @@ function showStep(step) {
     document.getElementById('prev-btn').classList.toggle('hidden', step === 0);
     document.getElementById('next-btn').classList.toggle('hidden', step === totalSteps - 1);
     document.getElementById('finish-btn').classList.toggle('hidden', step !== totalSteps - 1);
+
 }
 
 function nextStep() {
@@ -130,7 +131,7 @@ function prevStep() {
 }
 
 function finishCooking() {
-    document.getElementById('finish-form').submit();
+    window.location.href = '{{ route('cooking.complete', $recipe) }}';
 }
 
 // タイマー
@@ -196,6 +197,9 @@ async function sendChat() {
             <div class="text-red-400 text-xs text-center">エラーが発生しました。</div>`;
     }
 }
+
+// 初期表示時にボタンを設定
+showStep(0);
 
 // Enterキーで送信
 document.getElementById('chat-input').addEventListener('keypress', function(e) {

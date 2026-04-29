@@ -38,6 +38,7 @@ class RegisteredUserController extends Controller
 
         $user = User::create([
             'name' => $request->name,
+            'nickname' => $request->nickname,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
@@ -46,6 +47,7 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        session()->forget('register_data');
+        return redirect()->route('register.complete');
     }
 }

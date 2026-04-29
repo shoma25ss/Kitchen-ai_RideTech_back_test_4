@@ -75,7 +75,7 @@
                         <button type="submit"
                             formaction="{{ url('/recipes/save') }}"
                             class="w-full bg-green-600 text-white py-3 rounded-xl font-bold hover:bg-green-500">
-                            🍴 このレシピで調理する
+                            🍴 このレシピで調理
                         </button>
                     </form>
 
@@ -87,7 +87,7 @@
         <div class="mt-6 text-center">
             <a href="{{ route('ingredients.input') }}"
                class="text-gray-400 hover:text-gray-600 text-sm underline">
-                ← 食材入力に戻って再生成
+                ← 食材入力に戻る
             </a>
         </div>
     @endif

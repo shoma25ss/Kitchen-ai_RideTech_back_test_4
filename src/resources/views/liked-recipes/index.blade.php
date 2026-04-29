@@ -66,7 +66,7 @@
 
         <!-- ページネーション -->
         <div class="mt-6">
-            {{ $histories->links() }}
+            {{ $recipes->links() }}
         </div>
     @endif
 

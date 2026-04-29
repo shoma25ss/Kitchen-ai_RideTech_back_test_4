@@ -6,18 +6,18 @@
 
     <!-- タイトル -->
     <div class="mb-6">
-        <h1 class="text-2xl font-bold text-gray-700">🔍 レシピ審査</h1>
-        <p class="text-sm text-gray-400">公開申請中のレシピを審査してください</p>
+        <h1 class="text-2xl font-bold text-gray-700">🍳 公開レシピ一覧</h1>
+        <p class="text-sm text-gray-400">承認済みの公開レシピを管理します</p>
         <a href="{{ route('admin.dashboard') }}" class="text-sm text-gray-400 hover:underline">
             ← ダッシュボードへ
         </a>
     </div>
 
     <!-- 検索 -->
-    <form method="GET" action="{{ route('admin.recipes.index') }}" class="mb-6">
+    <form method="GET" action="{{ route('admin.recipes.published') }}" class="mb-6">
         <div class="flex flex-col gap-2">
             <input type="text" name="search" value="{{ request('search') }}"
-                placeholder="レシピ名で検索..."
+                placeholder="レシピを検索..."
                 class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-red-400">
             <button type="submit"
                 class="w-full bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-red-600">
@@ -32,41 +32,25 @@
             <div class="bg-white rounded-xl shadow p-4">
 
                 <!-- レシピ情報 -->
-                <div class="flex gap-3 items-center mb-3">
-                    <div class="w-12 h-12 bg-gradient-to-br from-yellow-100 to-orange-200 rounded-xl flex items-center justify-center text-xl flex-shrink-0">
-                        🍳
-                    </div>
-                    <div class="flex-1 min-w-0">
-                        <h2 class="font-bold text-gray-800 text-sm truncate cursor-pointer"
-                            onclick="this.classList.toggle('truncate')">
-                            {{ $recipe->title }}
-                        </h2>
-                        <div class="flex items-center gap-2 mt-1">
-                            <span class="text-xs text-gray-400">by {{ $recipe->user->display_name }}</span>
-                            <span class="text-xs text-red-400">❤️ {{ $recipe->likes->count() }}</span>
-                        </div>
-                        <span class="inline-block mt-1 px-2 py-0.5 bg-yellow-100 text-yellow-700 text-xs rounded-full">
-                            ⏳ 審査待ち
-                        </span>
+                <div class="mb-3">
+                    <h2 class="font-bold text-gray-800 text-sm truncate cursor-pointer mb-1"
+                        onclick="this.classList.toggle('truncate')">
+                        {{ $recipe->title }}
+                    </h2>
+                    <div class="flex items-center gap-3">
+                        <span class="text-xs text-red-400">❤️ {{ $recipe->likes->count() }}</span>
+                        <span class="text-xs text-gray-400">👤 {{ $recipe->user->display_name }}</span>
                     </div>
                 </div>
 
                 <!-- ボタン -->
                 <div class="flex gap-2">
-                    <form method="POST" action="{{ route('admin.recipes.approve', $recipe) }}" class="flex-1">
-                        @csrf
-                        @method('PATCH')
-                        <button type="submit"
-                            class="w-full bg-green-600 text-white py-2 rounded-lg text-xs font-bold hover:bg-green-500">
-                            承認
-                        </button>
-                    </form>
-                    <form method="POST" action="{{ route('admin.recipes.reject', $recipe) }}" class="flex-1">
+                    <form method="POST" action="{{ route('admin.recipes.unpublish', $recipe) }}" class="flex-1">
                         @csrf
                         @method('PATCH')
                         <button type="submit"
                             class="w-full bg-gray-400 text-white py-2 rounded-lg text-xs font-bold hover:bg-gray-300">
-                            却下
+                            非公開
                         </button>
                     </form>
                     <form method="POST" action="{{ route('admin.recipes.destroy', $recipe) }}" class="flex-1">
@@ -83,8 +67,8 @@
             </div>
         @empty
             <div class="bg-white rounded-xl shadow p-12 text-center">
-                <div class="text-4xl mb-3">✅</div>
-                <p class="text-gray-400 text-sm">審査待ちのレシピはありません</p>
+                <div class="text-4xl mb-3">🍳</div>
+                <p class="text-gray-400 text-sm">公開中のレシピがありません</p>
             </div>
         @endforelse
     </div>

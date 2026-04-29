@@ -1,47 +1,79 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ログイン — KitchenAI</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+<body class="bg-green-50 min-h-screen flex items-center justify-center px-4">
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+<div class="w-full max-w-sm">
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+    <!-- ロゴ -->
+    <div class="text-center mb-8">
+        <div class="text-5xl mb-2">🍳</div>
+        <a href="{{ route('top') }}" class="text-2xl font-bold text-green-800">KitchenAI</a>
+    </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+    <!-- カード -->
+    <div class="bg-white rounded-2xl shadow-lg p-8">
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
+        <h1 class="text-xl font-bold text-gray-700 text-center mb-6">ログイン</h1>
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+        <form method="POST" action="{{ route('login') }}">
+            @csrf
 
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
+            <!-- メールアドレス -->
+            <div class="mb-4">
+                <input type="email" name="email" value="{{ old('email') }}"
+                    placeholder="メールアドレス"
+                    class="w-full border border-gray-200 rounded-xl px-4 py-4 text-sm focus:outline-none focus:border-green-500 bg-gray-50"
+                    required autofocus>
+                @error('email')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
+            </div>
 
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
+            <!-- パスワード -->
+            <div class="mb-6">
+                <input type="password" name="password"
+                    placeholder="パスワード"
+                    class="w-full border border-gray-200 rounded-xl px-4 py-4 text-sm focus:outline-none focus:border-green-500 bg-gray-50"
+                    required>
+                @error('password')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- ログインボタン -->
+            <button type="submit"
+                class="w-full bg-blue-600 text-white py-4 rounded-xl font-bold text-base hover:bg-blue-500 mb-4">
+                ログイン
+            </button>
+
+            <!-- パスワード忘れ -->
+            @if(Route::has('password.request'))
+                <div class="text-center">
+                    <a href="{{ route('password.request') }}"
+                       class="text-sm text-blue-400 hover:underline">
+                        パスワードを忘れた方
+                    </a>
+                </div>
             @endif
 
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+        </form>
+    </div>
+
+    <!-- 新規登録へ -->
+    <div class="text-center mt-6">
+        <span class="text-sm text-gray-500">アカウントをお持ちでない方は</span>
+        <a href="{{ route('register') }}" class="text-sm text-green-600 font-bold hover:underline ml-1">
+            新規登録
+        </a>
+    </div>
+
+</div>
+
+</body>
+</html>
