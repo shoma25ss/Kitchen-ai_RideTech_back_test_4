@@ -44,12 +44,12 @@
         </div>
 
         <!-- いいね・公開ボタン -->
-        <div class="flex gap-3">
+        <div class="flex flex-col gap-3">
             @auth
                 <form method="POST" action="{{ route('recipes.like', $recipe) }}">
                     @csrf
                     <button type="submit"
-                        class="flex items-center gap-2 px-4 py-2 rounded-xl border text-sm font-bold
+                        class="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl border text-sm font-bold
                         {{ $isLiked ? 'bg-red-50 border-red-300 text-red-500' : 'bg-gray-50 border-gray-300 text-gray-500' }}">
                         ❤️ {{ $recipe->likes->count() }}
                         {{ $isLiked ? 'いいね済み' : 'いいね' }}
@@ -60,7 +60,7 @@
                     <form method="POST" action="{{ route('recipes.publish', $recipe) }}">
                         @csrf
                         <button type="submit"
-                            class="px-4 py-2 rounded-xl border text-sm font-bold
+                            class="w-full px-4 py-3 rounded-xl border text-sm font-bold
                             {{ $recipe->is_public ? 'bg-gray-50 border-gray-300 text-gray-500' : 'bg-green-50 border-green-300 text-green-600' }}">
                             {{ $recipe->is_public ? '非公開にする' : '公開する' }}
                         </button>
@@ -76,7 +76,7 @@
         <div class="space-y-2">
             @foreach($recipe->ingredients as $ingredient)
                 <div class="flex justify-between items-center py-2 border-b border-gray-100 last:border-0">
-                    <span class="text-gray-700">{{ $ingredient->name }}</span>
+                    <span class="text-gray-700 text-sm">{{ $ingredient->name }}</span>
                     <span class="text-gray-400 text-sm">{{ $ingredient->quantity }}</span>
                 </div>
             @endforeach
@@ -101,12 +101,12 @@
                 <div class="w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
                     {{ mb_substr($comment->user->display_name, 0, 1) }}
                 </div>
-                <div class="flex-1">
+                <div class="flex-1 min-w-0">
                     <div class="flex items-center justify-between mb-1">
-                        <span class="text-sm font-bold text-gray-700">{{ $comment->user->name }}</span>
+                        <span class="text-sm font-bold text-gray-700">{{ $comment->user->display_name }}</span>
                         <span class="text-xs text-gray-400">{{ $comment->created_at->diffForHumans() }}</span>
                     </div>
-                    <p class="text-gray-600 text-sm">{{ $comment->body }}</p>
+                    <p class="text-gray-600 text-sm break-all">{{ $comment->body }}</p>
                     @if(auth()->check() && $comment->user_id === auth()->id())
                         <form method="POST" action="{{ route('comments.destroy', $comment) }}" class="mt-1">
                             @csrf
@@ -124,12 +124,12 @@
         @auth
             <form method="POST" action="{{ route('comments.store', $recipe) }}" class="mt-4">
                 @csrf
-                <div class="flex gap-2">
+                <div class="flex flex-col gap-2">
                     <input type="text" name="body"
                         placeholder="コメントを入力..."
-                        class="flex-1 border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-green-500">
+                        class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-green-500">
                     <button type="submit"
-                        class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-500">
+                        class="w-full bg-green-600 text-white py-2 rounded-lg text-sm font-bold hover:bg-green-500">
                         投稿
                     </button>
                 </div>

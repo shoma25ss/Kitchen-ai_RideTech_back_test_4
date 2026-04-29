@@ -4,9 +4,14 @@
 
 <div class="max-w-2xl mx-auto">
 
-    <h1 class="text-2xl font-bold text-gray-700 mb-6">❤️ いいねした料理</h1>
+<div class="mb-6">
+    <h1 class="text-2xl font-bold text-gray-700">❤️ いいねした料理</h1>
+    <a href="{{ route('profile.edit') }}" class="text-sm text-gray-400 hover:underline">
+        ← マイページへ
+    </a>
+</div>
 
-    @if($recipes->isEmpty())
+    @if($recipes->count() === 0)
         <div class="bg-white rounded-xl shadow p-12 text-center">
             <div class="text-5xl mb-4">❤️</div>
             <p class="text-gray-400 mb-4">まだいいねした料理がありません。</p>
@@ -19,18 +24,15 @@
         <div class="space-y-4">
             @foreach($recipes as $like)
                 <div class="bg-white rounded-xl shadow p-4 flex gap-4 items-center">
-
-                    <!-- 料理画像（仮） -->
                     <div class="w-16 h-16 bg-gradient-to-br from-yellow-100 to-orange-200 rounded-xl flex items-center justify-center text-2xl flex-shrink-0">
                         🍳
                     </div>
-
-                    <!-- 情報 -->
-                    <div class="flex-1">
-                        <h2 class="font-bold text-gray-800 mb-1">{{ $like->recipe->title }}</h2>
-                        <p class="text-xs text-gray-400 mb-2">by {{ $like->recipe->user->name }}</p>
-
-                        <!-- タグ -->
+                    <div class="flex-1 min-w-0">
+                        <h2 class="font-bold text-gray-800 mb-1 truncate cursor-pointer"
+                            onclick="this.classList.toggle('truncate')">
+                            {{ $like->recipe->title }}
+                        </h2>
+                        <p class="text-xs text-gray-400 mb-2">by {{ $like->recipe->user->display_name }}</p>
                         <div class="flex flex-wrap gap-1">
                             @if($like->recipe->genre)
                                 <span class="bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full text-xs">
@@ -44,8 +46,6 @@
                             @endif
                         </div>
                     </div>
-
-                    <!-- ボタン -->
                     <div class="flex flex-col gap-2">
                         <a href="{{ route('recipes.show', $like->recipe) }}"
                            class="bg-green-600 text-white px-3 py-2 rounded-lg text-xs font-bold hover:bg-green-500 text-center">
@@ -59,12 +59,10 @@
                             </button>
                         </form>
                     </div>
-
                 </div>
             @endforeach
         </div>
 
-        <!-- ページネーション -->
         <div class="mt-6">
             {{ $recipes->links() }}
         </div>
